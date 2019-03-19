@@ -2,7 +2,8 @@
 
 ## Functional components
 
-Functional components are great for things that don’t really require any concept of dynamic modifications or interaction:
+Functional components are great for things that don’t really require any concept of dynamic 
+modifications or interaction:
 
 ```javascript
     function MyApp() {
@@ -46,9 +47,12 @@ Functional components are great for things that don’t really require any conce
 
 ## Scope
 
-Each instantiated component receives its own scope. This means we can reuse components as many times as needed without worrying about conflicts.
+Each instantiated component receives its own scope. This means we can reuse components as 
+many times as needed without worrying about conflicts.
 
 ## Events
+
+Events can occur using onChange, onClick etc. We can use an arrow function direct or call a function:
 
 ```javascript
     <input type="checkbox" checked={props.item.completed} onChange={ () => console.log("Changed!") }/>
@@ -79,7 +83,8 @@ Second is WHERE do we want to render it
 
 ## Styles
 
-Inline styles need to be in a JS object. Things like '-' aren't allowed, e.g background-color. Instead, we use backgroundColor.
+Inline styles need to be in a JS object. Things like '-' aren't allowed, e.g background-color. 
+Instead, we use backgroundColor.
 
 A neat way, and a method that would allow of dynamic styles given different values, is to assign a variable:
 
@@ -98,11 +103,18 @@ Using objects as props needs slightly different notation:
 
 ```javascript
     <ContactCard 
-        contact={{name: "Mr. Whiskerson", imgUrl: "http://placekitten.com/300/200", phone: "(212) 555-1234", email: "mr.whiskaz@catnap.meow"}}
+        contact={{
+            name: "Mr. Whiskerson", 
+            imgUrl: "http://placekitten.com/300/200", 
+            phone: "(212) 555-1234", 
+            email: "mr.whiskaz@catnap.meow"
+        }}
     />
 ```
 
-We need to go from JS to JSX and to do that we using the double bracket notation - the first gets us into JS, the second gets is into the object. We use the same convention for writing out inline styles.
+We need to go from JS to JSX and to do that we using the double bracket notation - 
+the first gets us into JS, the second gets is into the object. 
+We use the same convention for writing out inline styles.
 
 ## Loading data into state
 
@@ -127,8 +139,8 @@ Is as easy as:
 
 ## setState, prevState and Bind
 
-Whenever we want a class method to be able to modify the state, we need to bind that method to the class.
-Below, handClick gets bound.
+Whenever we want a class method to be able to modify the state, we need 
+to bind that method to the class. Below, handClick gets bound.
 
 
 ```javascript
@@ -222,7 +234,7 @@ Above we're passing in a function we prevState as an argument than adding one to
 
         return (
             <div>
-            {productsList}
+                {productsList}
             </div>
         )
     }
