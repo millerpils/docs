@@ -24,6 +24,8 @@ modifications or interaction:
 
 ## Class based components
 
+Whenever we want to use state, we need classes
+
 ```javascript
     class App extends React.Component {
         constructor() {
@@ -37,6 +39,45 @@ modifications or interaction:
             return (
                 <div>
                     <h1>You are currently logged {this.state.isLoggedIn ? "in" : "out"}</h1>
+                </div>
+            )
+        }
+    }
+
+    export default App
+```
+
+##Lifecycle methods
+
+These methods are available for use throughout the lifecycle of an application.
+
+### componentDidMount
+
+componentDidMount() is a method hook that can be run some kind of code immediately after the component first mounts to the DOM. A common use is to get data from somewhere so the component can do what it's supposed to do.
+
+```javascript
+    class App extends Component {
+        constructor() {
+            super()
+            this.state = {
+                character: {}
+            }
+        }
+        
+        componentDidMount() {
+            fetch("https://swapi.co/api/people/1")
+                .then(response => response.json())
+                .then(data => {
+                    this.setState({
+                        character: data
+                    })
+                })
+        }
+        
+        render() {
+            return (
+                <div>
+                    {this.state.character.name}
                 </div>
             )
         }
@@ -97,6 +138,17 @@ A neat way, and a method that would allow of dynamic styles given different valu
     <h1 style={styles}>Good {timeOfDay}!</h1>
 ```
 
+## Conditional rendering
+
+### &&
+
+Traditionally, the and operator would consider both the left and right parts of the statement, if this and that are true, then the statement is true. The && operator in React is different - if the thing on the left is true, it immediately returns the thing on the right.
+
+```javascript
+    this.state.unreadMessages.length > 0 && 
+    <h2>You have {this.state.unreadMessages.length} unread messages!</h2>
+```
+
 ## Writing out objects
 
 Using objects as props needs slightly different notation:
@@ -121,7 +173,6 @@ We use the same convention for writing out inline styles.
 Is as easy as:
 
 ```javascript
-
     import todosData from "./todosData" // json file
 
     class App extends React.Component {
@@ -136,8 +187,96 @@ Is as easy as:
     etc...
 ```
 
+## Working with forms
 
-## setState, prevState and Bind
+By using the name prop in the form itself, then matching the name in state, we can collect the values in state and use them:
+
+
+```javascript
+    function
+
+    class App extends Component {
+        constructor() {
+            super()
+            this.state = {
+                firstName: "",
+                lastName: "",
+                job: ""
+            }
+            this.handleChange = this.handleChange.bind(this)
+        }
+        
+        handleChange(event) {
+            /*
+                This line effectively adds a reference to the values as
+                event.target. We can then use a simple name:value pairing 
+                in setState as seen below. 
+
+                Notice we need a ternary to identify checkboxes on their
+                own. This is because are true/false and we don't need 
+                their value
+            */
+            const {name, value, type, checked} = event.target
+            type === "checkbox" ? 
+                this.setState({
+                    [name]: checked
+                })
+            :
+            this.setState({
+                [name]: value
+            }) 
+        }
+        
+        render() {
+            return (
+                <form>
+                    <input 
+                        type="text" 
+                        value={this.state.firstName} 
+                        name="firstName" 
+                        placeholder="First Name" 
+                        onChange={this.handleChange} 
+                    />
+                    <br />
+                    <input 
+                        type="text" 
+                        value={this.state.lastName} 
+                        name="lastName" 
+                        placeholder="Last Name" 
+                        onChange={this.handleChange} 
+                    />
+                    <input 
+                        type="text" 
+                        value={this.state.job} 
+                        name="job" 
+                        placeholder="Job" 
+                        onChange={this.handleChange} 
+                    />
+                    <h1>{this.state.firstName} {this.state.lastName}</h1>
+                    <h2>{this.state.job}</h2>
+                </form>
+            )
+        }
+    }
+
+    export default App
+```
+
+### Handling form changes
+
+#### Check boxes
+
+Most form elements in expose a value property so the state can be set using the [name] of the element and the value that's been entered. Select boxes are a bit in that they just hold true or false. To hand this, our handleChange function needs a bit more login:
+
+```javascript
+    handleChange(event) {
+        const {name, value, type, checked} = event.target
+        type === "checkbox" ? this.setState({ [name]: checked }) : this.setState({ [name]: value })
+    }
+```
+    
+
+## setState, prevState and bind
 
 Whenever we want a class method to be able to modify the state, we need 
 to bind that method to the class. Below, handClick gets bound.
@@ -193,7 +332,41 @@ React has a "built-in" previous state for times where it's useful to know what t
     }
 ```
 
-Above we're passing in a function we prevState as an argument than adding one to the count.
+Above we're passing in a function we prevState as an argument than adding one to the count
+
+## Two way data binding
+
+Sometimes a component might need to change the state in the main class. To do this we can use
+events and props. First we render the component and pass in the class function as a prop:
+
+```javascript
+    <LocationForm
+        query={this.state.query} 
+        handleChange={this.handleChange}
+        getWeatherData={this.getWeatherData}
+    />
+```
+
+We can then call the function in the functional component and interact with the state:
+
+```javascript
+  let handleChange = function(event) {
+    props.handleChange(event)
+  }
+
+  return (
+    <div className="location-form">
+      <form>
+        <input 
+          type="text" 
+          name="query" 
+          value={props.query} 
+          placeholder="Enter a location..."
+          onChange={handleChange} 
+        /> 
+``
+
+
 
 ## Very simple React app with props and map
 
@@ -230,7 +403,7 @@ Above we're passing in a function we prevState as an argument than adding one to
     import Product from "./Product"
 
     function App() {
-        const productsList = productsData.map( product => <Product key={product.id} name={product.name} />) 
+        const productsList = productsData.map( product => <Product key={product.id} name={product.name} />
 
         return (
             <div>
@@ -283,4 +456,77 @@ Above we're passing in a function we prevState as an argument than adding one to
     ]
 
     export default products
+```
+
+## Meme Generator app - uses State, componentDidMount, forms
+
+```javascript
+    import React, {Component} from "react"
+
+    class MemeGenerator extends Component {
+        constructor() {
+            super()
+            this.state = {
+                topText: "",
+                bottomText: "",
+                randomImg: "http://i.imgflip.com/1bij.jpg",
+                allMemeImgs: []
+            }
+            this.handleChange = this.handleChange.bind(this)
+            this.handleSubmit = this.handleSubmit.bind(this)
+        }
+        
+        componentDidMount() {
+            fetch("https://api.imgflip.com/get_memes")
+                .then(response => response.json())
+                .then(response => {
+                    const {memes} = response.data
+                    this.setState({ allMemeImgs: memes })
+                })
+        }
+        
+        handleChange(event) {
+            const {name, value} = event.target
+            this.setState({ [name]: value })
+        }
+        
+        handleSubmit(event) {
+            event.preventDefault()
+            const randNum = Math.floor(Math.random() * this.state.allMemeImgs.length)
+            const randMemeImg = this.state.allMemeImgs[randNum].url
+            this.setState({ randomImg: randMemeImg })
+        }
+        
+        render() {
+            return (
+                <div>
+                    <form className="meme-form" onSubmit={this.handleSubmit}>
+                        <input 
+                            type="text"
+                            name="topText"
+                            placeholder="Top Text"
+                            value={this.state.topText}
+                            onChange={this.handleChange}
+                        /> 
+                        <input 
+                            type="text"
+                            name="bottomText"
+                            placeholder="Bottom Text"
+                            value={this.state.bottomText}
+                            onChange={this.handleChange}
+                        /> 
+                    
+                        <button>Gen</button>
+                    </form>
+                    <div className="meme">
+                        <img src={this.state.randomImg} alt="" />
+                        <h2 className="top">{this.state.topText}</h2>
+                        <h2 className="bottom">{this.state.bottomText}</h2>
+                    </div>
+                </div>
+            )
+        }
+    }
+
+    export default MemeGenerator
 ```
