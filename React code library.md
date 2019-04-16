@@ -187,6 +187,19 @@ Is as easy as:
     etc...
 ```
 
+##State callback
+
+State is asyncronous so it may run at the same time other functions get run. In order to ensure the state as been set
+before calling some function, we can use a callback on setState:
+
+```javascript
+    this.setState({
+        queryType: queryVal,
+        queryID: randomCityID
+        }, () => this.getWeatherData()
+    )
+```
+
 ## Working with forms
 
 By using the name prop in the form itself, then matching the name in state, we can collect the values in state and use them:
@@ -351,6 +364,12 @@ We can then call the function in the functional component and interact with the 
 
 ```javascript
   let handleChange = function(event) {
+    props.handleChange(event)
+  }
+
+  or
+
+  const handleChange = event => {
     props.handleChange(event)
   }
 
