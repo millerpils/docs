@@ -128,3 +128,17 @@ Sometimes global asset is required:
 %begin_global_asset_url%
     <a href="%asset_url%">
 %end_global_asset_url%
+
+# As_asset
+
+You can get info from an asset by tacking this on to a keyword replace, eg
+
+```html
+    <a href="%asset_metadata_person.organisation.department^as_asset:asset_url%">
+        %asset_metadata_person.organisation.department^as_asset:asset_name%
+    </a>
+```
+        
+## Include paint layout by ID
+
+%globals_asset_contents_paint_layout_id_474151%

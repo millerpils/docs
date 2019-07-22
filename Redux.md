@@ -10,12 +10,24 @@ Wraps the App component and allows us to pass the store by way of props
 
 ## Actions
 
-The only way to change the state is to emit an action; an object describing what
-happened
+Actions are payloads of information that send data from your application to your store. They are the only source of information for the store. You send them to the store using store.dispatch().
+
+## Action Creators
+
+Action creators are exactly that—functions that create actions. 
+
+```javascript
+  function addTodo(text) {
+    return {
+      type: ADD_TODO,
+      text
+    }
+  }
+```
 
 ## Reducers
 
-Reducers specify how the state tree is transformed by actions
+Reducers specify how the application's state changes in response to actions sent to the store. Remember that actions only describe what happened, but don't describe how the application's state changes. The reducer is a pure function that takes the previous state and an action, and returns the next state.
 
 ### cartReducer function
 
