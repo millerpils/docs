@@ -1,4 +1,4 @@
-# JavaScript
+ IIFE# JavaScript
 
 ## Relational operators
 
@@ -121,4 +121,15 @@ function testJackpot(result) {
 
 testJackpot(['@', '@', 'i', 'i']) <-- false
 testJackpot(['@', '@', '@', '@']) <-- true
+```
+
+## IIFE
+
+IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined.
+
+```javascript
+(function () {
+  // herp derp
+})
+();
 ```

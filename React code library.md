@@ -383,7 +383,7 @@ We can then call the function in the functional component and interact with the 
           placeholder="Enter a location..."
           onChange={handleChange} 
         /> 
-``
+```
 
 
 

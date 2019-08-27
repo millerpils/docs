@@ -129,7 +129,7 @@ Sometimes global asset is required:
     <a href="%asset_url%">
 %end_global_asset_url%
 
-# As_asset
+## As_asset
 
 You can get info from an asset by tacking this on to a keyword replace, eg
 
@@ -138,7 +138,51 @@ You can get info from an asset by tacking this on to a keyword replace, eg
         %asset_metadata_person.organisation.department^as_asset:asset_name%
     </a>
 ```
+
+### As asset tags
+
+^as_asset:asset_contents_raw
+
         
 ## Include paint layout by ID
 
 %globals_asset_contents_paint_layout_id_474151%
+
+## Conditions
+
+If/else
+
+```javascript
+    %begin_asset_metadata_xcri.course.title%
+        %asset_metadata_xcri.course.title%
+    %else_asset%
+        %asset_metadata_DC.title%
+    %end_asset%
+```
+
+## Getting metadata from referenced related assets
+
+```
+%frontend_asset_metadata_course.courses.parentcourse^as_asset:asset_metadata_course.courses.bundle.price%
+```
+
+Above parentcourse is a related asset, which we're accessing the bundle price field from.
+
+## Asset listings
+
+Variable names and values can be passed from the page asset (or other asset) into
+the asset listing. This then restricts the results and returns the values specified
+in the asset listing configuration.
+
+EG:
+
+Page asset -> 
+    Nested asset listing
+    Var name: parentid
+    Var value: %frontend_asset_metadata_course.courses.parentcourse%
+
+Asset listing ->
+    Replacement Root node for the listing (must be a child of the static root node)
+    parentid
+
+We can then print what we need to print in page contents/default format.
