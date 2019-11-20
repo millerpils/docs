@@ -128,8 +128,58 @@ testJackpot(['@', '@', '@', '@']) <-- true
 IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined.
 
 ```javascript
-(function () {
-  // herp derp
-})
-();
+  (function () {
+    // herp derp
+  })
+  ();
+```
+
+## Simple multi-dimensional array
+
+```javascript
+  var dinnerChoices = [
+                        ["Salad", "Soup", "Cheese Plate"], // <-- row 0
+                        ["Chicken", "Salmon", "Lasagna"]   // <-- row 1
+                      ]
+
+  let firstAppetizer = dinnerChoices[0][0]
+  let secondAppetizer = dinnerChoices[0][1]
+  let thirdMainDish = dinnerChoices[1][2]
+
+  console.log(firstAppetizer, secondAppetizer, thirdMainDish)
+
+  dinnerChoices[1][0] = "Steak"
+
+  console.log(dinnerChoices[1][0])
+```
+
+## Jagged arrays
+
+This example is in C# but the concept is the same. Instead of having a fixed size, multi-dimensional
+array, jagged arrays can save space each column only being as large as it needs to be:
+
+```C#
+using System;
+
+class Program
+{
+    static void Main() {
+        
+        // create jagged array with 3 rows, and as many columns as needed
+        int[][] jagged = new int[3][];
+        
+        // Set row 0
+        jagged[0] = new int[2];
+        jagged[0][0] = 8;
+        jagged[0][1] = 10;
+        
+        // Set row 1
+        jagged[1] = new int[4] {20, 30, 40, 50};
+        
+        // Set row 2
+        jagged[2] = new int[9];
+        
+        Console.WriteLine("At row 1, col 0: " + jagged[1][0]);
+    }
+}
 ```

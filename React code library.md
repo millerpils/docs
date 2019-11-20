@@ -549,3 +549,29 @@ We can then call the function in the functional component and interact with the 
 
     export default MemeGenerator
 ```
+
+## Refs
+
+Refs provide a way to access DOM nodes or React elements created in the render method.
+
+There are a few good use cases for refs:
+
+Managing focus, text selection, or media playback.
+Triggering imperative animations.
+Integrating with third-party DOM libraries.
+
+Avoid using refs for anything that can be done declaratively.
+
+```javascript
+    <div className="panel-body" ref="inner">
+        {children}
+    </div>`
+```
+
+```javascript
+    this.setState({
+        height: this.refs.inner.clientHeight`
+    })
+```
+
+Height could then be used to set a style - e.g a height style for a collapsible toggle
